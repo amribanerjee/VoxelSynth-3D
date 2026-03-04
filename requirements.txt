@@ -1,1 +1,6 @@
-
+numpy
+scipy
+pydicom
+scikit-learn
+matplotlib
+pyvista    # For 3D volumetric rendering in notebooks

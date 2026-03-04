@@ -20,3 +20,22 @@ class VolumeSynthesizer:
 
     def synthesize_final(self, original_vol, processed_vol, mask):
         return np.where(mask == 1, processed_vol, original_vol)
+if __name__ == "__main__":
+    base_dir = Path(__file__).parent.parent
+    proc_dir = base_dir / 'data' / 'processed'
+    
+    synthesizer = VolumeSynthesizer()
+    
+    for phi_file in proc_dir.glob("*_phi.npy"):
+        mask_file = Path(str(phi_file).replace("_phi.npy", "_mask.npy"))
+        
+        if mask_file.exists():
+            vol = np.load(phi_file)
+            mask = np.load(mask_file)
+            
+            interp_vol = synthesizer.linear_interpolation_fill(vol, mask)
+            final_output = synthesizer.synthesize_final(vol, interp_vol, mask)
+            
+            output_path = Path(str(phi_file).replace("_phi.npy", "_final.npy"))
+            np.save(output_path, final_output)
+            print(f"Final Synthesis complete for: {phi_file.name}")

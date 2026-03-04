@@ -21,3 +21,15 @@ class ArtifactSegmenter:
         X = self._get_features(volume)
         prediction = self.model.predict(X)
         return prediction.reshape(volume.shape).astype(np.uint8)
+if __name__ == "__main__":
+    base_dir = Path(__file__).parent.parent
+    proc_dir = base_dir / 'data' / 'processed'
+    
+    segmenter = ArtifactSegmenter()
+    
+    for npy_file in proc_dir.glob("*_phi.npy"):
+        vol = np.load(npy_file)
+        mask = segmenter.predict_mask(vol)
+        mask_path = npy_file.with_name(npy_file.stem.replace("_phi", "_mask") + ".npy")
+        np.save(mask_path, mask)
+        print(f"Generated mask for: {npy_file.name}")

@@ -55,3 +55,23 @@ Validated across three independently reconstructed clinical datasets, VoxelSynth
 │   └── physics_utils.py    # Photon starvation & beam hardening models
 ├── notebooks/              # Visualization and metric plotting
 └── main.py                 # Execution entry point
+```
+
+## 📝 Publication & Citations
+
+This work is currently being finalized for submission to IEEE Transactions on Medical Imaging (TMI).
+
+Title: VoxelSynth-3D: A Hybrid-Operator Engine for Deterministic Metal Artifact Reduction in Volumetric CT
+
+Authors: Amritesh Banerjee, Manal Irfan, Renil Renji Joseph, Sudeep Roplekar
+
+Abstract
+Metal artifacts in Computed Tomography (CT), arising from the dual phenomenon of photon starvation and beam hardening, present a persistent challenge to diagnostic accuracy and volumetric structural integrity. Whereas traditional two-dimensional sinogram-based interpolation methods effectively reduce slice-specific noise, they also introduce secondary artifacts and fail to maintain longitudinal continuity across the axial plane. Furthermore, purely generative deep-learning approaches usually lack the clinical traceability needed for a radiological assessment. In this study, we propose a novel three-dimensional volumetric reconstruction framework using a hybrid-operator engine to reduce photon starvation artifacts. Treating the dataset as a continuous 3D scalar field, the framework uses a multi-scale Decision Tree classification to achieve deterministic voxel segmentation within an identified artifact zone. Anatomical reconstruction is then run through affine geometric mapping, synthesizing the missing projections by leveraging high-fidelity spatial priors from adjacent unaffected regions. Experimental results across three independently reconstructed clinical datasets, confirmed against clinical ground truth, show that the three-dimensional hybrid-operator engine outperforms conventional two-dimensional methods in both Absolute Volumetric Error (AVE) and Structural Similarity Index (SSIM). This method provides a computationally efficient solution that bridges the gap between physics-centric modeling and algorithmic reconstruction, ensuring diagnostic confidence across a variety of radiological scenarios.
+
+## 🤝 Collaboration
+We are actively seeking clinical and research partners to validate the VoxelSynth-3D framework across diverse radiological scenarios.
+
+Clinical Validation: We are looking for de-identified datasets featuring diverse metallic implants (orthopedic hardware, dental work, cardiac leads) to further test volumetric consistency.
+
+Technical Integration: If you are interested in integrating the hybrid-operator engine into existing medical imaging pipelines, please open an issue or contact the authors directly.
+

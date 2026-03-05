@@ -56,6 +56,47 @@ Validated across three independently reconstructed clinical datasets, VoxelSynth
 ├── notebooks/              # Visualization and metric plotting
 └── main.py                 # Execution entry point
 ```
+---
+
+## 🚀 Execution Instructions
+
+### 1. Environment Setup
+Ensure you have Python 3.8+ installed. We recommend using a virtual environment to manage dependencies:
+```bash
+# Create and activate virtual environment
+python -m venv venv
+source venv/bin/activate  # On Windows use: venv\Scripts\activate
+
+# Install required dependencies
+pip install -r requirements.txt
+```
+### 1. Data Preparation
+VoxelSynth-3D is designed to handle volumetric spatial data. To ensure the hybrid-operator engine functions correctly, follow these preparation steps:
+
+* **Supported Formats:** The pipeline natively supports `.nii` and `.nii.gz` (NIfTI) files. DICOM series should be converted using `dcm2niix` before processing.
+* **Orientation:** Ensure volumes are in a standard anatomical orientation (e.g., RAS or LPS). 
+* **Placement:** Move your raw, artifact-heavy scans into the `/data/input/` directory.
+
+
+
+### 2. Running the Reconstruction Pipeline
+The reconstruction process follows a three-stage hybrid approach: **Segmentation** (Decision Tree), **Mapping** (Affine Geometric), and **Synthesis** (Scalar Field).
+
+#### Standard Reconstruction
+To run the full pipeline on a single volume with default parameters:
+```bash
+python main.py --input ./data/input/patient_01.nii.gz --output ./data/output/patient_01_fixed.nii.gz
+```
+### 1. Performance Evaluation
+To validate the fidelity of the reconstruction, VoxelSynth-3D includes a benchmarking suite that calculates the **Structural Similarity Index (SSIM)** and **Absolute Volumetric Error (AVE)**.
+
+To compare a reconstructed volume against a reference ground truth:
+```bash
+python main.py --evaluate \
+    --prediction ./results/reconstructed_vol.nii.gz \
+    --ground_truth ./data/reference_vol.nii.gz
+```
+
 
 ## 📝 Publication & Citations
 

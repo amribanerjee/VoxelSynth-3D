@@ -70,27 +70,31 @@ source venv/bin/activate  # On Windows use: venv\Scripts\activate
 # Install required dependencies
 pip install -r requirements.txt
 ```
-### 1. Data Preparation
-VoxelSynth-3D is designed to handle volumetric spatial data. To ensure the hybrid-operator engine functions correctly, follow these preparation steps:
+### 1. Data Preparation (DICOM Workflow)
+VoxelSynth-3D is designed to handle volumetric spatial data. While the engine processes data as a 3D scalar field, it accepts DICOM series as input:
 
-* **Supported Formats:** The pipeline natively supports `.nii` and `.nii.gz` (NIfTI) files. DICOM series should be converted using `dcm2niix` before processing.
-* **Orientation:** Ensure volumes are in a standard anatomical orientation (e.g., RAS or LPS). 
-* **Placement:** Move your raw, artifact-heavy scans into the `/data/input/` directory.
-
-
+* **Supported Formats:** The pipeline accepts directories containing `.dcm` files. 
+* **Folder Structure:** Each scan should be in its own sub-folder within `/data/input/`.
+* **Consistency:** Ensure the DICOM metadata (Slice Thickness and Spacing) is consistent across the series to maintain the integrity of the 3D scalar field.
 
 ### 2. Running the Reconstruction Pipeline
 The reconstruction process follows a three-stage hybrid approach: **Segmentation** (Decision Tree), **Mapping** (Affine Geometric), and **Synthesis** (Scalar Field).
 
-#### Standard Reconstruction
-To run the full pipeline on a single volume with default parameters:
+#### Standard Reconstruction (DICOM to NIfTI)
+To run the full pipeline on a DICOM directory:
 ```bash
-python main.py --input ./data/input/patient_01.nii.gz --output ./data/output/patient_01_fixed.nii.gz
+python main.py --input ./data/input/patient_01/ --output ./results/patient_01_reconstructed.nii.gz
 ```
-### 1. Performance Evaluation
+---
+
+## 📊 Evaluation & Benchmarking
+
 To validate the fidelity of the reconstruction, VoxelSynth-3D includes a benchmarking suite that calculates the **Structural Similarity Index (SSIM)** and **Absolute Volumetric Error (AVE)**.
 
-To compare a reconstructed volume against a reference ground truth:
+
+
+### Running Evaluation
+To compare your reconstructed output against a reference ground truth:
 ```bash
 python main.py --evaluate \
     --prediction ./results/reconstructed_vol.nii.gz \
@@ -102,7 +106,7 @@ python main.py --evaluate \
 
 This work is currently being finalized for submission to IEEE Transactions on Medical Imaging (TMI).
 
-Title: VoxelSynth-3D: A Hybrid-Operator Engine for Deterministic Metal Artifact Reduction in Volumetric CT
+Title: 3D Volumetric Reconstruction via Hybrid-Operator Voxel Synthesis for Mitigation of Metal Artifacts in Computed Tomography
 
 Authors: Amritesh Banerjee, Manal Irfan, Renil Renji Joseph, Sudeep Roplekar
 

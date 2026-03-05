@@ -37,8 +37,8 @@ Validated across three independently reconstructed clinical datasets, VoxelSynth
 
 | Metric | Conventional 2D MAR | VoxelSynth-3D (Ours) |
 | :--- | :---: | :---: |
-| **SSIM** | 0.82 | **0.94** |
-| **AVE** | 12.4% | **4.2%** |
+| **SSIM** | __ | **__** |
+| **AVE** | __ | **__** |
 | **Consistency** | Low (Z-axis jitter) | **High (Volumetric)** |
 
 ---
